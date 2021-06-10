@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">Home | blog-do-codigo</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Um blog simples em Node.js"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="blog-do-codigo"><meta property="twitter:description" content="Um blog simples em Node.js"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#usuarios">usuarios</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/usuarios/usuarios-modelo.js~Usuario.html">Usuario</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="blog-do-c&#xF3;digo">Blog do c&#xF3;digo</h1><blockquote>
+<p>Uma API de blog em Node.js</p>
+</blockquote>
+<h1 id="pol&#xED;tica-de-acesso--ao-conte&#xFA;do">Pol&#xED;tica de Acesso  ao Conte&#xFA;do</h1><h1 id="prop&#xF3;sito">Prop&#xF3;sito</h1><p>Esse documento cont&#xE9;m todas as informa&#xE7;&#xF5;es necess&#xE1;rias sobre controle de acesso ao conte&#xFA;do do Blog do C&#xF3;digo.</p>
+<p>Esse documento deve ser lido por todas as pessoas que trabalham no Blog do C&#xF3;digo.</p>
+<h1 id="autentica&#xE7;&#xE3;o">Autentica&#xE7;&#xE3;o</h1><p>Antes de prosseguir com o uso da API, &#xE9; necess&#xE1;rio que crie uma nova conta atrav&#xE9;s da rota POST /usuario, e em seguida, verificar o email da nova conta atrav&#xE9;s da rota POST/usuario/verifica_email/:token.</p>
+<p>Com a conta criada e verificada, use a rota de login POST /usuario/login para obter um token de acesso atrav&#xE9;s do cabe&#xE7;alho Authorization na resposta. Use esse cabe&#xE7;alho nas demais requisi&#xE7;&#xF5;es para se autenticar com a API e prosseguir com controle de acesso ao conte&#xFA;do.</p>
+<h1 id="controle-de-conte&#xFA;do-do-blog">Controle de conte&#xFA;do do Blog</h1><p>No nosso blog, temos o cargo de assinante. A pessoa com cargo de assinante apenas pode ler os posts do blog, os posts de qualquer pessoa.</p>
+<p>Al&#xE9;m do cargo de assinante, tamb&#xE9;m temos o cargo de editor. A pessoa com cargo de editor pode e deve cadastrar novos posts no blog e gerenci&#xE1;-los.</p>
+<p>Por &#xFA;ltimo, o blog possui o cargo de admin. O cargo de administrador &#xE9; para as pessoas que v&#xE3;o gerenciar os usu&#xE1;rios e posts do nosso blog.</p>
+<h1 id="teste-de-custo-para-gerar-hash-de-senha">Teste de custo para gerar hash de senha</h1><p>const bcrypt = require(&apos;bcrypt&apos;);<br>for (let custo = 6; custo &lt; 18; custo++) {
+  const tempoInicial  = Date.now();
+  bcrypt.hash(&apos;A&apos;, custo).then(
+    () =&gt; console.log(<code>custo: ${custo}; tempo: ${ Date.now() - tempoInicial} ms</code>)
+  );
+} </p>
+<h1 id="comando-para-gerar-uma-senha-segura-ramdomica">Comando para gerar uma senha segura ramdomica</h1><p>node -e &quot;console.log( require(&apos;crypto&apos;).randomBytes(256).toString(&apos;base64&apos;)) &quot;</p>
+<p>#redis
+O Redis n&#xE3;o suporta oficialmente o sistema operacional Windows, mas &#xE9; poss&#xED;vel instalar uma vers&#xE3;o experimental, mantida pelo grupo Microsoft Open Tech. Por se tratar de uma vers&#xE3;o experimental, &#xE9; importante deixar claro que at&#xE9; o momento em que este curso foi escrito a sua instala&#xE7;&#xE3;o &#xE9; recomendada apenas em ambiente de desenvolvimento.</p>
+<p>Outra observa&#xE7;&#xE3;o a ser feita &#xE9; que atualmente apenas a vers&#xE3;o para instala&#xE7;&#xF5;es do Windows de 64-bit &#xE9; suportada oficialmente pelo projeto Microsoft Open Tech.</p>
+<p>A vers&#xE3;o mantida pelo Microsoft Open Tech pode ser obtida atrav&#xE9;s do link <a href="https://github.com/MSOpenTech/redis">https://github.com/MSOpenTech/redis</a> mas, para simplificar, vamos realizar o download de um arquivo de instala&#xE7;&#xE3;o no reposit&#xF3;rio do projeto atrav&#xE9;s do link:</p>
+<p><a href="https://github.com/MSOpenTech/redis/releases/download/win-3.0.500/Redis-x64-3.0.500.msi">https://github.com/MSOpenTech/redis/releases/download/win-3.0.500/Redis-x64-3.0.500.msi</a></p>
+<h1 id="se-a-instala&#xE7;&#xE3;o-do-redis-n&#xE3;o-funcionar">se a instala&#xE7;&#xE3;o do redis n&#xE3;o funcionar</h1><p>Ir no site <a href="https://github.com/dmajkic/redis/downloads">https://github.com/dmajkic/redis/downloads</a>, peguar a ultima vers&#xE3;o zipada, descompactar. Execurar o redis-server e em seguida o redis-cli. Para cada uma ir&#xE1; abrir uma inst&#xE2;ncia do prompt de comando. Deixar aberta at&#xE9; finalizar os testes.</p>
+<h1 id="para-saber-mais-sobre-t&#xE9;cnicas-de-controle-de-acesso">para saber mais sobre t&#xE9;cnicas de controle de acesso</h1><p>Durante o curso, trabalhamos com duas t&#xE9;cnicas de controle de acesso: o PABC (controle de acesso baseado em permiss&#xF5;es) e o RBAC (controle de acesso baseado em cargos/t&#xED;tulos).</p>
+<p>Essas duas t&#xE9;cnicas funcionam perfeitamente para o nosso blog e atendem nossa necessidade, mas possuem algumas contra-indica&#xE7;&#xF5;es de uso ou limita&#xE7;&#xF5;es, como por exemplo, RBAC n&#xE3;o nos ajuda a fazer controle de acesso baseado em conte&#xFA;do. &#xC9; importante conhecer outras t&#xE9;cnicas para controle de acesso, inclusive, como us&#xE1;-las em conjunto.</p>
+<p>Caso se interesse para saber mais, indicamos essa p&#xE1;gina da OWASP, em ingl&#xEA;s: <a href="https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html#introductio">https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html#introductio</a></p>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

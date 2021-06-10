@@ -1,5 +1,6 @@
 const Post = require('./posts-modelo')
 const { InvalidArgumentError } = require('../erros')
+const { ConversorPost } = require('../conversores')
 
 module.exports = {
   async adiciona (req, res) {
@@ -19,9 +20,17 @@ module.exports = {
 
   async lista (req, res) {
     try {
-      const posts = await Post.listarPorAutor(req.user.id)
+      let posts = await Post.listarTodos()
+      const conversor = new ConversorPost('json', req.acesso.todos.permitido ? req.acesso.todos.atributos : req.acesso.apenasSeu.atributos)
 
-      res.json(posts)
+      if (!req.estaAutenticado) {
+        posts = posts.map(post => {
+          post.conteudo = post.conteudo.substr(0, 10) + '... Você precisa assinar o blog para ler o restante do post'
+          return post
+        })
+      }
+
+      res.send(conversor.converter(posts))
     } catch (erro) {
       return res.status(500).json({ erro: erro.message })
     }
@@ -38,7 +47,13 @@ module.exports = {
 
   async remover (req, res) {
     try {
-      const post = await Post.buscaPorId(req.params.id, req.user.id)
+      let post
+      if (req.acesso.todos.permitido === true) {
+        post = await Post.buscaPorId(req.params.id)
+      } else if (req.acesso.apenasSeu.permitido === true) {
+        post = await Post.buscaPorIdAutor(req.params.id, req.user.id)
+      }
+      
       post.remover()
       res.status(204)
       res.end()

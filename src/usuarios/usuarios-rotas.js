@@ -1,7 +1,16 @@
 const usuariosControlador = require('./usuarios-controlador')
 const middlewaresAutenticacao = require('./middlewares-autenticacao')
+const autorizacao = require('../middlewares/autorizacao')
 
 module.exports = app => {
+  app
+    .route('/usuario/trocar-senha')
+    .post(usuariosControlador.trocarSenha)
+
+  app
+    .route('/usuario/esqueci-minha-senha')
+    .post(usuariosControlador.esqueciMinhaSenha)
+
   app
     .route('/usuario/atualiza_token')
     .post(middlewaresAutenticacao.refresh, usuariosControlador.login)
@@ -27,9 +36,15 @@ module.exports = app => {
   app
     .route('/usuario')
     .post(usuariosControlador.adiciona)
-    .get(usuariosControlador.lista)
+    .get(
+      [middlewaresAutenticacao.bearer, autorizacao('usuario', 'ler')],
+      usuariosControlador.lista
+    )
 
   app
     .route('/usuario/:id')
-    .delete(middlewaresAutenticacao.bearer, usuariosControlador.deleta)
+    .delete(
+      [middlewaresAutenticacao.bearer, middlewaresAutenticacao.local, autorizacao('usuario', 'remover')], 
+      usuariosControlador.deleta
+    )
 }
